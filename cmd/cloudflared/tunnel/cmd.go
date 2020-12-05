@@ -26,7 +26,6 @@ import (
 	"github.com/cloudflare/cloudflared/origin"
 	"github.com/cloudflare/cloudflared/signal"
 	"github.com/cloudflare/cloudflared/tlsconfig"
-	"github.com/cloudflare/cloudflared/tunneldns"
 	"github.com/cloudflare/cloudflared/tunnelstore"
 
 	"github.com/coreos/go-systemd/daemon"
@@ -102,7 +101,7 @@ func Commands() []*cli.Command {
 		buildDeleteCommand(),
 		buildCleanupCommand(),
 		// for compatibility, allow following as tunnel subcommands
-		tunneldns.Command(true),
+		buildTunnelDnsCommand(),
 		dbConnectCmd(),
 	}
 

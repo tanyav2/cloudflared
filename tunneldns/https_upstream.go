@@ -40,6 +40,7 @@ func NewUpstreamHTTPS(endpoint string, bootstraps []string, logger logger.Servic
 
 // Exchange provides an implementation for the Upstream interface
 func (u *UpstreamHTTPS) Exchange(ctx context.Context, query *dns.Msg) (*dns.Msg, error) {
+	fmt.Println(query.Question)
 	queryBuf, err := query.Pack()
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to pack DNS query")

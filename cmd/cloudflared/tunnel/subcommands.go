@@ -394,6 +394,10 @@ func cleanupCommand(c *cli.Context) error {
 	return sc.cleanupConnections(tunnelIDs)
 }
 
+func buildTunnelDnsCommand() *cli.Command {
+
+}
+
 func buildRouteCommand() *cli.Command {
 	return &cli.Command{
 		Name:      "route",

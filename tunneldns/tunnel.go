@@ -26,12 +26,13 @@ type Listener struct {
 	logger logger.Service
 }
 
-func Command(hidden bool) *cli.Command {
+func DoHCommand(hidden bool) *cli.Command {
 	return &cli.Command{
 		Name:   "proxy-dns",
 		Action: cliutil.ErrorHandler(Run),
 		Usage:  "Run a DNS over HTTPS proxy server.",
 		Flags: []cli.Flag{
+
 			&cli.StringFlag{
 				Name:    "metrics",
 				Value:   "localhost:",
@@ -65,6 +66,28 @@ func Command(hidden bool) *cli.Command {
 		},
 		ArgsUsage: " ", // can't be the empty string or we get the default output
 		Hidden:    hidden,
+	}
+}
+
+func ODoHCommand(hidden bool) *cli.Command {
+	return &cli.Command{
+		Name:   "proxy-odoh",
+		Action: cliutil.ErrorHandler(Run),
+		Usage:  "Runs an Oblivious DNS over HTTPS proxy server",
+		Flags: []cli.Flag{
+			&cli.StringSliceFlag{
+				Name:    "odoh-proxy",
+				Usage:   "ODoH proxy URL, you can specify multiple endpoints for redundancy",
+				Value:   cli.NewStringSlice("https://odoh1.surfdomeinen.nl/proxy"),
+				EnvVars: []string{"TUNNEL_DNS_ODOH_PROXY"},
+			},
+			&cli.StringSliceFlag{
+				Name:    "odoh-target",
+				Usage:   "ODoH target URL, you can specify multiple endpoints for redundancy",
+				Value:   cli.NewStringSlice("https://odoh.cloudflare-dns.com/dns-query"),
+				EnvVars: []string{"TUNNEL_DNS_ODOH_TARGET"},
+			},
+		}
 	}
 }
 
